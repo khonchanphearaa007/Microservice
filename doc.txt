@@ -1,0 +1,30 @@
+-- We needs create Middleman into [notification-service]
+for asynchronouse communication between tasks service 
+ ** if notification service is down or it's taking time 
+ to respond then task service is also affacted
+ 
+
+-- RabbitMQ is an open-source message broker that allow applications
+to communication asynchronouse by sending and receiving message
+via queues.
+
+---- Command line of docker-compose 
+- docker-compose down           #for down server docker
+- docker-compose build          #for build server docker
+
+- docker-compose up -d          #for run server docker
+- docker-compose up --build -d    #for build and run server docker
+
+
+- How to usage docker in Ternimal of path our project 
+1, setUp of [ docker-compose up -d ] we should run this command first 
+for start our project running.
+2, If this have new anything we should [ docker-compose down ] for stop 
+server running of docker.
+3, After add anything this a new ready [ docker-compose up -d ] for running
+server again in docker container.
+
+
+-- RabbitMQ login admin
+Username: guest
+password: guest

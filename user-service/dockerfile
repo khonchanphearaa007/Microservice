@@ -1,0 +1,13 @@
+# dockerfile tells you how you can package one service
+# into an image
+
+# docker-compose will tell you how you can run multiple
+# service togehter
+
+FROM node:18
+WORKDIR /app
+COPY package*/ ./
+RUN npm install
+COPY . .
+EXPOSE 3001
+CMD [ "node", "index.js" ]
