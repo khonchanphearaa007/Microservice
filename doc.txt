@@ -19,12 +19,21 @@ via queues.
 - How to usage docker in Ternimal of path our project 
 1, setUp of [ docker-compose up -d ] we should run this command first 
 for start our project running.
-2, If this have new anything we should [ docker-compose down ] for stop 
+2, If this have new anything to fix we should [ docker-compose down ] for stop 
 server running of docker.
-3, After add anything this a new ready [ docker-compose up -d ] for running
+3, After to fix service a new ready [ docker-compose up -d ] for running
 server again in docker container.
 
 
 -- RabbitMQ login admin
 Username: guest
 password: guest
+
+
+User service port: 3001
+Task service port: 3002
+Notification service port: 3003
+Mogodb port: 27017
+RabbitMQ port: 5672
+
+API-Gateway service port: 3000

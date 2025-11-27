@@ -1,9 +1,4 @@
-# Docker-compose.yml file is a docker compose file. 
-# It is used to run multiple docker containers together
-
-# version: '3.8'
-# We can defind of version of docker compose file 
-# just image: mongodb/mongodb-community-server for this only if using with version docker
+version: '3.8'
 
 services:
   mongo:
@@ -14,38 +9,56 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq_node
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
     ports:
-      - "5672:5672" # RabbitMQ server port local machine
-      - "15672:15672" # Web UI port
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - task-service
+      - notification-service
+      - rabbitmq
 
   user-service:
     build: ./user-service
     container_name: user-service
     ports:
       - "3001:3001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/userdb
     depends_on:
       - mongo
+      - rabbitmq
 
   task-service:
     build: ./task-service
     container_name: task-service
     ports:
       - "3002:3002"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/taskdb
     depends_on:
       - mongo
       - rabbitmq
-    
+
   notification-service:
     build: ./notification-service
     container_name: notification-service
     ports:
       - "3003:3003"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/notifydb
     depends_on:
       - mongo
       - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_node
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
 volumes:
   mongo_data:
