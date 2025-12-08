@@ -9,16 +9,18 @@ to communication asynchronouse by sending and receiving message
 via queues.
 
 ---- Command line of docker-compose 
-- docker-compose down           #for down server docker
-- docker-compose build          #for build server docker
-
-- docker-compose up -d          #for run server docker
-- docker-compose up --build -d    #for build and run server docker
+Runing for build project into docker-compose [command terminal]
+CLI                                 Description
+1. docker-compose up -d             For run server docker
+2. docker-compose build             For build server docker again for fixing 
+                                    (we can using one this command [docker-compose up -d])
+3. docker-compose down              When stop server running (fixing somthing one)
+4. docker-compose up --build -d     build, running server docker
+ 
 
 
 - How to usage docker in Ternimal of path our project 
-1, setUp of [ docker-compose up -d ] we should run this command first 
-for start our project running.
+1, setUp of [ docker-compose up -d ] we should run this command first for start our project running.
 2, If this have new anything to fix we should [ docker-compose down ] for stop 
 server running of docker.
 3, After to fix service a new ready [ docker-compose up -d ] for running
@@ -30,10 +32,9 @@ Username: guest
 password: guest
 
 
-User service port: 3001
-Task service port: 3002
-Notification service port: 3003
-Mogodb port: 27017
-RabbitMQ port: 5672
-
-API-Gateway service port: 3000
+- User service port: 3001
+- Task service port: 3002
+- Notification service port: 3003
+- Mogodb port: 27017
+- RabbitMQ port: 5672
+- API-Gateway service port: 3000
