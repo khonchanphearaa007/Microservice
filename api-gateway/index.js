@@ -6,12 +6,12 @@ const app = express();
 
 // MIDDLEWARES
 app.use(cors());
-app.use(express.json());                     // <-- REQUIRED
+app.use(express.json());                    
 app.use(express.urlencoded({ extended: true }));
 
 // USER SERVICE ROUTE
 app.use('/users', createProxyMiddleware({
-    target: 'http://user-service:3001',      // <-- MUST MATCH SERVICE NAME + PORT
+    target: 'http://user-service:3001',     
     changeOrigin: true
 }));
 
