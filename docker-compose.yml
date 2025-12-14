@@ -18,6 +18,7 @@ services:
       - user-service
       - task-service
       - notification-service
+      - product-service
       - rabbitmq
 
   user-service:
@@ -41,6 +42,17 @@ services:
     depends_on:
       - mongo
       - rabbitmq
+      
+  product-service:
+      build: ./product-service
+      container_name: product-service
+      ports:
+        - "3004:3004"
+      environment:
+        - MONGO_URI=mongodb://mongo:27017/productdb
+      depends_on:
+        - mongo
+        - rabbitmq
 
   notification-service:
     build: ./notification-service
