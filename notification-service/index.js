@@ -1,25 +1,43 @@
 const amqp = require('amqplib');
 
-async function start() {
-    try {
-        connection = await amqp.connect("amqp://rabbitmq_node");
-        channel = await connection.createChannel(); 
-        // Create a channel So this is going to create a commnunication channel through
-        // which we send and receive messages
+let channel;
 
-        await channel.assertQueue("task_created"); // if Queue not exists, created Notification service will 
-        // start listening
-        console.log("Notification Service is listening to messages...");
+async function connectRabbitMQWithRetry(retries = 10, delay = 3000) {
+    while (retries > 0) {
+        try {
+            const connection = await amqp.connect('amqp://rabbitmq');
+            channel = await connection.createChannel();
 
-        channel.consume("task_created", (msg) =>{
-            const taskData = JSON.parse(msg.content.toString()); // Convert the message content from binary to JavaScript object
-            console.log("Notification: NEW TASK: ", taskData.title);
-            console.log("Notification: NEW TASK: ", taskData);
-            channel.ack(msg); // Acknowledge that the message has been processed
-        })
-    } catch (error) {
-        console.error("RabbitMQ connection error: ", error.message);
-        
+            // TASK EVENTS
+            await channel.assertQueue('task_created');
+            channel.consume('task_created', (msg) => {
+                if (!msg) return;
+                const taskData = JSON.parse(msg.content.toString());
+                console.log('📌 NEW TASK:', taskData.title);
+                channel.ack(msg);
+            });
+
+            // PRODUCT EVENTS
+            await channel.assertQueue('product_created');
+            channel.consume('product_created', (msg) => {
+                if (!msg) return;
+                const product = JSON.parse(msg.content.toString());
+                console.log('📦 NEW PRODUCT:', product.name);
+                channel.ack(msg);
+            });
+
+            console.log('Notification service is listening to task & product events');
+            return;
+
+        } catch (error) {
+            console.error('RabbitMQ connection error:', error.message);
+            retries--;
+            console.log(`Retrying... (${retries} left)`);
+            await new Promise(res => setTimeout(res, delay));
+        }
     }
+
+    console.error('Could not connect to RabbitMQ');
 }
-start();
+
+connectRabbitMQWithRetry();
