@@ -4,12 +4,13 @@ This project Microservice for architecture using language for build use:
 - Node.js
 - MogoDB
 - RabbitMQ
-- Mobile App (Next Feature comming soon...)
+- Mobile App (Kotlin: Next Feature comming soon...)
 
 Include the system it have:
 * User service for verity name, email into (MogoDB)
 * Task service handles and task process working with title, description, userId event into (RabbitMQ)
 * Notification service -Listions service when Taske service it must be create event it to message broker in docker with RabbitMQ 
+* product service handles of process (Name, Price, Quantity) into alert (RabbitMQ)
 * API-Gateway for router requests to Microservice
 
 # Teach Stack
@@ -38,6 +39,10 @@ your-project/
 │   ├── index.js
 │   ├── package.json
 │   └── Dockerfile
+├── product-service/
+|   ├── index.js
+│   ├── package.json
+│   └── Dockerfile
 └── docker-compose.yml
 
 ```
@@ -48,7 +53,7 @@ your-project/
 
 ## Service Overivew 
 ### MogoDB
-- Container: mogo
+- Container: mongo
 - port: 27017
 - Version: docker-compose '3.8'
 
@@ -61,8 +66,11 @@ your-project/
 ### API Gateway
 - Container: api-gateway
 - Port: 3000
+    - endPoint: (product, tasks, users)
+    - localhost: http://localhost:3000/endPoint
 - Routes: 
     - http://localhost:3001/users -> User service
     - http://localhost:3002/tasks -> Task service
+    - http://localhost:3004/product -> Product service
 
 
