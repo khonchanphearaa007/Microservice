@@ -1,0 +1,41 @@
+                Access MongoDB via docker container:
+                
+You can connect using mongo shell:
+    - docker exec -it mongo mongosh
+* docker exec -it mongo -> Open terminal inside the container
+* mongosh -> start MongoDB shell
+
+1. List Databases
+    - show dbs
+2. Switch to a Database
+    - use products
+3. List Collections (Tables)
+    - show collections
+4. Query Documents (Rows)
+    - db.products.find()
+Example output:
+    {
+    "_id": ObjectId("693d3cc3039e4f9e29c6a9e7"),
+    "name": "Laptop",
+    "price": 1200,
+    "quantity": 10,
+    "createdAt": ISODate("2025-12-13T17:15:31.593Z")
+    }
+
+5. Insert Documents (Add a Row)
+    db.products.insertOne({
+        name: "Mac...",
+        price: 200..,
+        quantity: 5,
+        createdAt: new Date()
+    })
+
+6. Update Documents
+    db.prodcuts.updateOne({
+        { name: "Labtop" },
+        { $set: { price: 1300 } }
+    })
+* $set :update specific fields.
+
+7. Delete Documents
+    - db.prooducts.deleteOne({ name: "Mac M6" })
