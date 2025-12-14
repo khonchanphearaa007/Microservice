@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // USER SERVICE ROUTE
 app.use('/users', createProxyMiddleware({
-    target: 'http://user-service:3001',     
+    target: 'http://user-service:3001',      
     changeOrigin: true
 }));
 
@@ -21,6 +21,11 @@ app.use('/tasks', createProxyMiddleware({
     changeOrigin: true
 }));
 
+// PRODCUT SERIVCE ROUTE
+app.use('/products', createProxyMiddleware({
+    target: 'http://product-service:3004',
+    changeOrigin: true
+}))
 app.listen(3000, () => {
     console.log('API Gateway running on port 3000');
 });
