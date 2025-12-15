@@ -16,7 +16,12 @@ CLI                                 Description
                                     (we can using one this command [docker-compose up -d])
 3. docker-compose down              When stop server running (fixing somthing one)
 4. docker-compose up --build -d     build, running server docker
- 
+5. docker-compose ps                Check containers are running
+                                    e.g. -prodcut-service -> up
+                                         -task-service -> up
+6. docker-compose logs -f notification-service          After Post, Check notification-service logs:
+                                    e.g. Product Created
+                                         Name: Mac M4       
 
 
 - How to usage docker in Ternimal of path our project 
@@ -38,3 +43,79 @@ password: guest
 - Mogodb port: 27017
 - RabbitMQ port: 5672
 - API-Gateway service port: 3000
+
+
+_______________ API-Gateway Workflow _______________
+
+-- An API Gateway is single entry point for all client to interact with your backend Microservices.
+Think of it as a front door that routes request to the right microservice.
+
+Workflow:
+
+        Client (Postman, React App, etc.)
+                        |
+                        v
+                API Gateway (http://localhost:3000)
+                        |
+            -----------------------------------------
+            |           |           |               |
+            User       Task        Product      Notification Services
+            Service    Service     Service      Service
+
+* Purposes in a project
+
+A, Single Entry point
+- Client (frontend app, mobile apps, Postman) only need to call one URL: (http://localhost:3000)
+- without itm the client would have to know URLs of every microservice
+ (http://localhost:3001, 3002, etc.)
+
+B, Request Routing
+- The gateway routes request to the appropriate microservice.
+Example usage:
+
+    GET /users -> user-service
+    GET /tasks -> task-service
+    POST /product -> product-service
+
+C, Crosss-Cutting Concerns
+Instead of implementing repeatedly in each microservics, the gateway can handle:
+1. CORS (Cross-Origin Resource Sharing)
+2. Authenticating & Authirization
+3. Rate Limiting / Throttling
+4. Logging & Monitoring
+5. Load Balancing (if multiple instance of service exit)
+6. Request/Response transformations (modify body, header, etc.)
+
+D, Abstraction / Decoupling
+- Client don't need to known internal service URLs or Ports
+- Internal microservice can scale independently or move to different host without
+ affecting the client
+
+* In Your Project Specifically
+
+Microservice                                 Purpose via Gateway
+
+-User Service                                Handle /users request (CRUD for users)
+-Task Service                                Handle /tasks request (CRUD tasks & RabbitMQ events)
+-Product Service                             Handle /products request (CRUD product & RabbitMQ event)
+-Notification Service                        Listens to RabbitMQ event, not directly exposed to client
+
+Gateway role:
+- Froned -> only talks to http://localhost:3000
+- Gateway -> forwards to respective microservice internally (e.g. Docker network)
+
+
+_______________ Payment-service _______________
+
+Field for Payment Service:
+
+Field                   Type                    Description
+_id                     ObjectId                MongoDB auto-generated ID
+orderId                 String                  ID of the order/product/task begin paid for
+userId                  String                  User making the payment
+amount                  Number                  Amount of money paid
+status                  String                  pending
+paymentMethod           String                  card
+createdAt               Date                    Payment creation timestamp
+updatedAt               Date                    Last updated timestamp
+

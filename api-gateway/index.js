@@ -32,7 +32,14 @@ app.use('/products', createProxyMiddleware({
         console.error("Error here:", err.message);
         res.status(503).json({message: 'Product service unvaliable'});
     }
-}))
+}));
+
+// PAYMENT SERICE ROUTE
+app.use('/payments', createProxyMiddleware({
+    target: 'http://payment-service:3005',
+    changeOrigin: true
+}));
+
 app.listen(3000, () => {
     console.log('API Gateway running on port 3000');
 });

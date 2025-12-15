@@ -25,6 +25,16 @@ async function connectRabbitMQWithRetry(retries = 10, delay = 3000) {
                 console.log('📦 NEW PRODUCT:', product.name);
                 channel.ack(msg);
             });
+            
+            // PAYMENT EVENTS
+            await channel.assertQueue('payment_created');
+            channel.consume('payment_created', (msg) => {
+                if (!msg) return;
+                const payment = JSON.parse(msg.content.toString());
+                console.log("Notification: Payment Event");
+                console.log(`Order ID: ${payment.orderId}, Status: ${payment.status}, Amount: ${payment.amount}`);
+                channel.ack(msg);
+            });
 
             console.log('Notification service is listening to task & product events');
             return;

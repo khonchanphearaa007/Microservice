@@ -53,6 +53,17 @@ services:
       depends_on:
         - mongo
         - rabbitmq
+  
+  payment-service:
+    build: ./payment-service
+    container_name: payment-service
+    ports:
+      - "3005:3005"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/paymentdb
+    depends_on:
+      - mongo
+      - rabbitmq
 
   notification-service:
     build: ./notification-service
