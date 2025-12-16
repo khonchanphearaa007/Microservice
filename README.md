@@ -11,6 +11,7 @@ Include the system it have:
 * Task service handles and task process working with title, description, userId event into (RabbitMQ)
 * Notification service -Listions service when Taske service it must be create event it to message broker in docker with RabbitMQ 
 * product service handles of process (Name, Price, Quantity) into alert (RabbitMQ)
+* payment service for handle when payment product
 * API-Gateway for router requests to Microservice
 
 # Teach Stack
@@ -43,6 +44,10 @@ your-project/
 |   ├── index.js
 │   ├── package.json
 │   └── Dockerfile
+├── Payment-service/
+│   ├── index.js
+│   ├── package.json
+│   └── Dockerfile
 └── docker-compose.yml
 
 ```
@@ -66,11 +71,12 @@ your-project/
 ### API Gateway
 - Container: api-gateway
 - Port: 3000
-    - endPoint: (product, tasks, users)
+    - endPoint: (products, tasks, users)
     - localhost: http://localhost:3000/endPoint
 - Routes: 
     - http://localhost:3001/users -> User service
     - http://localhost:3002/tasks -> Task service
-    - http://localhost:3004/product -> Product service
+    - http://localhost:3004/products -> Product service
+    - http://localhost:3005/payments -> Payment service
 
 
