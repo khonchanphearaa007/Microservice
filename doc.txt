@@ -119,3 +119,25 @@ paymentMethod           String                  card
 createdAt               Date                    Payment creation timestamp
 updatedAt               Date                    Last updated timestamp
 
+
+-- Create a payment in Postman:
+URL: POST http://localhost:3000/payments
+Body (JSON)
+
+{
+  "orderId": "693d3cc3039e4f9e29c6a9e7",
+  "userId": "12345",
+  "amount": 500,
+  "paymentMethod": "card"
+}
+
+-- Check all Payments:
+URL: GET http://localhost:3000/payments
+
+-- Update payment status:
+URL: PATCH http://localhost:3000/payments/<paymentId>
+Body (JSON)
+
+{
+  "status": "completed"
+}
