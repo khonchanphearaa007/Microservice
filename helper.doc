@@ -39,3 +39,87 @@ Example output:
 
 7. Delete Documents
     - db.prooducts.deleteOne({ name: "Mac M6" })
+
+
+                Apply Distributed System with Microservies 
+
+    This project apply Distributed-System it consists of independently 
+  deployment microservice that communicate over HTTP and RabbitMQ, use separate
+  database, and are coordination throught an API Gateway with fault isolation.
+
+1. Have multiple independent services:
+    - api-gateway
+    - user-service
+    - product-service
+    - task-service
+    - payment-service
+    - notification-service
+Each service:
+- Runs in its own process
+- Has its own port
+- Has its own responsibility
+
+
+2. Network-Based Communication
+    HTTP (Synchronous)
+
+    API Gateway -> User/ Product/ Task/ Payment service
+    
+        Using: 
+            - http-proxy-middleware
+            - Docker service name (user-service, payment-service..)
+
+
+3. Asynchronouse Messaging (RabbitMQ)
+    Payment Service:
+
+        channel.sendToQueue("Payment_Created", ...)
+    
+    Notification Service:
+
+        channel.consume("Payment_Created",...)
+        
+        + Services do NOT call each other directl
+        + Event-dirven communication
+        + Loose conpuling
+        This is classis distributed-system design.
+
+4. independent Database (Distributed Data)
+    - MongoDB for payment-service
+    - Other service have their own dbs
+
+
+5. Fault Isolation
+ Example:
+ - Notification service goes down ❌
+ - Payment service still saves data ✅
+ - Other service continue working ✅
+ Even Added:
+ - RabbitMQ retry logic
+ - Timeouts in API Gateway
+ This is fault tolerance, a key distributed-system property.
+
+
+6. API Gateway Pattern 
+
+    Client -> API Gateway -> Service
+    
+ - Single entry point
+ - Central Routing
+ - Hides internal service
+ This is a distributed coordination pattern.
+
+
+7. Containerized Deployment (Docker)
+    Using:
+    - docker
+    - docker-compose
+    - Shared Docker network
+    Service can run on:
+    - Same machine
+    - Different machines (cloud)
+This make the system physically distributed
+
+
+
+    
