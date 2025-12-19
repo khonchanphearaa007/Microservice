@@ -3,17 +3,19 @@ const mongoose = require('mongoose');
 const amqp = require('amqplib');
 const bodyParser = require('body-parser');
 const Schema = mongoose.Schema;
+require('dotenv').config(); 
 
 const app = express();
 const PORT = 3005; // This port 3005 running docker for payment service
-
-const portMongoose = 'mongodb://mongo:27017/payments'
 
 // Middlewares
 app.use(bodyParser.json());
 
 // MongoDB
-mongoose.connect(portMongoose)
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 .then(() => console.log("Connect to MongoDB (Payment)"))
 .catch((error) => console.error(error.message))
 

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const amqp = require('amqplib');
+require('dotenv').config();
 
 const app = express();
 const port = 3002;
@@ -9,7 +10,10 @@ const port = 3002;
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://mongo:27017/tasks')
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
     .then(() => console.log("Connnected to MongoDB"))
     .catch((error) => console.error("MongoDB connection error", error.message));
 
