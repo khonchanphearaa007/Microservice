@@ -14,6 +14,11 @@ Include the system it have:
 * payment service for handle when payment product
 * API-Gateway for router requests to Microservice
 
+## Microservice Architecture
+
+<img src="Microservice Architecture .drawio.png" alt="App Screenshot" >
+
+
 # Teach Stack
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white)
