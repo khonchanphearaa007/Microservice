@@ -19,17 +19,47 @@ mongoose.connect(process.env.MONGO_URI, {
     .catch((err) => console.error(err.message))
 
 // Product Schema
+// const ProductSchema = new mongoose.Schema({
+//     name: String,
+//     price: Number,
+//     quantity: Number,
+//     createdAt: {
+//         type: Date,
+//         default: () =>{
+//             const now = new Date();
+//             return new Date(now.getTime() + 7 * 60 * 60 * 1000);
+//         }
+        
+//     }
+// });
+
+//  Product Schema
 const ProductSchema = new mongoose.Schema({
-    name: String,
-    price: Number,
-    quantity: Number,
+    name:{
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        default: "",    // For this optional 
+    },
+    imageUrl: {
+        type: String,
+        default: ""
+    },
+    category: {
+        type: String,
+        enum: ["Skit", "Shirt", "Socks", "Bags", "Other"],
+        default: "Other"
+    },
+    price: {type: Number, required: true},
+    quantity: {type: Number, default: 0},
     createdAt: {
         type: Date,
         default: () =>{
             const now = new Date();
             return new Date(now.getTime() + 7 * 60 * 60 * 1000);
         }
-        
     }
 });
 
@@ -58,7 +88,14 @@ async function connectRabbitMQWithRetry(retries = 5, delay = 3000) {
 // Create product
 app.post('/products', async(req, res) =>{
     try {
-        const product = new Product(req.body);
+        const product = new Product({
+                name: req.body.name,
+                description: req.body.description,
+                imageUrl: req.body.imageUrl,
+                category: req.body.category,
+                price: req.body.price,
+                quantity: req.body.quantity   
+            });
         await product.save();
         if(!channel){
             return res.status(503).json({

@@ -15,9 +15,7 @@ Include the system it have:
 * API-Gateway for router requests to Microservice
 
 ## Microservice Architecture
-
-<img src="Microservice Architecture .drawio.png" alt="App Screenshot" >
-
+![Alt text](image/Microservice%20Architecture%20.drawio.png)
 
 # Teach Stack
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
