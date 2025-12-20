@@ -21,8 +21,9 @@ services:
     container_name: user-service
     ports:
       - "3001:3001"
-    env_file:
-      - ./user-service/.env
+    environment:
+      - MONGO_URI=mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}/userdb?retryWrites=true&w=majority
+      - JWT_SECRET=SUPER_SECRET_KEY
     networks:
       - ecommerce-net
    
@@ -32,8 +33,8 @@ services:
     container_name: task-service
     ports:
       - "3002:3002"
-    env_file:
-      - ./task-service/.env
+    environment:
+      - MONGO_URI=mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}/taskdb?retryWrites=true&w=majority
     networks:
       - ecommerce-net
    
@@ -43,8 +44,8 @@ services:
       container_name: product-service
       ports:
         - "3004:3004"
-      env_file:
-        - ./product-service/.env
+      environment:
+      - MONGO_URI=mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}/productdb?retryWrites=true&w=majority
       networks:
         - ecommerce-net
   
@@ -54,8 +55,8 @@ services:
     container_name: payment-service
     ports:
       - "3005:3005"
-    env_file:
-      - ./payment-service/.env
+    environment:
+      - MONGO_URI=mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}/paymentdb?retryWrites=true&w=majority
     networks:
       - ecommerce-net
    
@@ -65,8 +66,8 @@ services:
     container_name: notification-service
     ports:
       - "3003:3003"
-    env_file:
-      - ./notification-service/.env
+    environment:
+      - MONGO_URI=mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}/notifydb?retryWrites=true&w=majority
     networks:
       - ecommerce-net
     
