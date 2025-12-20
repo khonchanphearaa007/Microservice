@@ -102,8 +102,7 @@ app.patch('/payments/:id', async(req, res) =>{
             {status, updatedAt: new Date()},
             {new: true}
         );
-        if(!payment) return
-        res.status(404).json({error: "Payment is not found!"});
+        if(!payment) return res.status(404).json({error: "Payment is not found!"});
 
         // Send event into notification-service:
         if(channel){
