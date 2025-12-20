@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const amqp = require('amqplib');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express()
 const port = 3004;
@@ -10,7 +11,10 @@ const port = 3004;
 app.use(bodyParser.json());
 
 // MongoDB
-mongoose.connect('mongodb://mongo:27017/products')
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
     .then(() => console.log("Connect to MongoDB (products)"))
     .catch((err) => console.error(err.message))
 

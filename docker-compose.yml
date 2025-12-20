@@ -1,13 +1,6 @@
 version: '3.8'
 
 services:
-  mongo:
-    image: mongodb/mongodb-community-server:latest
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
 
   api-gateway:
     build: ./api-gateway
@@ -27,21 +20,16 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/userdb
-    depends_on:
-      - mongo
-      - rabbitmq
-
+      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/userdb?retryWrites=true&w=majority
+   
   task-service:
     build: ./task-service
     container_name: task-service
     ports:
       - "3002:3002"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/taskdb
-    depends_on:
-      - mongo
-      - rabbitmq
+      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/taskdb?retryWrites=true&w=majority
+   
       
   product-service:
       build: ./product-service
@@ -49,10 +37,8 @@ services:
       ports:
         - "3004:3004"
       environment:
-        - MONGO_URI=mongodb://mongo:27017/productdb
-      depends_on:
-        - mongo
-        - rabbitmq
+        - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/productdb?retryWrites=true&w=majority
+  
   
   payment-service:
     build: ./payment-service
@@ -60,10 +46,8 @@ services:
     ports:
       - "3005:3005"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/paymentdb
-    depends_on:
-      - mongo
-      - rabbitmq
+      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/paymentdb?retryWrites=true&w=majority
+   
 
   notification-service:
     build: ./notification-service
@@ -71,10 +55,7 @@ services:
     ports:
       - "3003:3003"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/notifydb
-    depends_on:
-      - mongo
-      - rabbitmq
+      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/notifydb?retryWrites=true&w=majority
 
   rabbitmq:
     image: rabbitmq:3-management
