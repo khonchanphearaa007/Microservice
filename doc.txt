@@ -33,6 +33,7 @@ server again in docker container.
 
 
 -- RabbitMQ login admin
+http://localhost:15672/
 Username: guest
 password: guest
 

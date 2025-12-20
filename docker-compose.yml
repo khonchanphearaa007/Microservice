@@ -13,22 +13,29 @@ services:
       - notification-service
       - product-service
       - rabbitmq
+    networks:
+      - ecommerce-net
 
   user-service:
     build: ./user-service
     container_name: user-service
     ports:
       - "3001:3001"
-    environment:
-      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/userdb?retryWrites=true&w=majority
+    env_file:
+      - ./user-service/.env
+    networks:
+      - ecommerce-net
    
+
   task-service:
     build: ./task-service
     container_name: task-service
     ports:
       - "3002:3002"
-    environment:
-      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/taskdb?retryWrites=true&w=majority
+    env_file:
+      - ./task-service/.env
+    networks:
+      - ecommerce-net
    
       
   product-service:
@@ -36,8 +43,10 @@ services:
       container_name: product-service
       ports:
         - "3004:3004"
-      environment:
-        - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/productdb?retryWrites=true&w=majority
+      env_file:
+        - ./product-service/.env
+      networks:
+        - ecommerce-net
   
   
   payment-service:
@@ -45,8 +54,10 @@ services:
     container_name: payment-service
     ports:
       - "3005:3005"
-    environment:
-      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/paymentdb?retryWrites=true&w=majority
+    env_file:
+      - ./payment-service/.env
+    networks:
+      - ecommerce-net
    
 
   notification-service:
@@ -54,8 +65,11 @@ services:
     container_name: notification-service
     ports:
       - "3003:3003"
-    environment:
-      - MONGO_URI=mongodb+srv://Sokrit:apple@e-commerce.afo5isd.mongodb.net/notifydb?retryWrites=true&w=majority
+    env_file:
+      - ./notification-service/.env
+    networks:
+      - ecommerce-net
+    
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -63,6 +77,9 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - ecommerce-net
 
-volumes:
-  mongo_data:
+networks:
+  ecommerce-net:
+    driver: bridge
