@@ -41,7 +41,7 @@ Example output:
     - db.prooducts.deleteOne({ name: "Mac M6" })
 
 
-                Apply Distributed System with Microservies 
+            Apply Distributed System with Microservies 
 
     This project apply Distributed-System it consists of independently 
   deployment microservice that communicate over HTTP and RabbitMQ, use separate
@@ -119,6 +119,63 @@ Each service:
     - Same machine
     - Different machines (cloud)
 This make the system physically distributed
+
+
+
+    ---Update doc product-service
+    
+    Example production JSON (Postman)
+    {
+        "name": "Oversized T-Shirt",
+        "description": "Cotton oversized fit",
+        "imageUrl": "https://example.com/images/shirt1.png",
+        "category": "Shirt",
+        "price": 29.99,
+        "quantity": 50
+    }
+
+    --- Update doc user-service
+    
+    Before it has name and email only just we will add:
+    - Password
+    - Hash password (bcrypt)
+    - Login endPoint
+    - JWT token
+
+        Install dependencies (user-service)
+            npm install bcryptjs jsonwebtoken
+        
+        install dependencies cors
+        npm i cors
+
+    bcrypt.hash(password, 10);
+    
+    - bcrypt.hash(...) : The core function that perform the encryption
+    - password : The first argument; this is the actual plain-text password
+    (e.g., "mySecret123") provided by the user
+    - 10 : The second argument, known as salt rounds. it determines how much
+    computational power is used to hash the password. A value of 10 is a standard
+    balance between high security and fast performance in 2025.
+
+    +process bcrypt.hash working
+
+    When user input password: 123
+
+    - It transforms 123 into a secure hash: The function takes 
+    the simple string "123" and converts it into a long, complex string 
+    (e.g., $2b$10$m0mq4PYOOvm74Gukml4FN...).
+
+    - Even short passwords become fixed-length hashes: Regardless of 
+    whether your input is 123 or a 50-character phrase, the resulting hash will 
+    always be the same length (typically 60 characters for bcrypt).
+
+    - Unique result every time: Because bcrypt automatically
+     adds a unique "salt" (random data) to every hash, 
+     if you hash 123 twice, you will get two completely different-looking hashes. 
+    
+
+
+
 
 
 
