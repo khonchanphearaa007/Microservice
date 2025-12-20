@@ -10,10 +10,7 @@ const port = 3002;
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connnected to MongoDB"))
     .catch((error) => console.error("MongoDB connection error", error.message));
 
