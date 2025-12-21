@@ -4,7 +4,7 @@ This project Microservice for architecture using language for build use:
 - Node.js
 - MogoDB
 - RabbitMQ
-- Mobile App (Kotlin: Next Feature comming soon...)
+- Mobile App UI E-Comerece
 
 Include the system it have:
 * User service for verity name, email into (MogoDB)
@@ -14,8 +14,6 @@ Include the system it have:
 * payment service for handle when payment product
 * API-Gateway for router requests to Microservice
 
-## Microservice Architecture
-![Alt text](image/Microservice%20Architecture%20.drawio.png)
 
 # Teach Stack
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
